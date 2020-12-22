@@ -1136,9 +1136,6 @@ init_dev_info(int fd, uint32_t devid, const struct gen_device_info *devinfo)
 	    fprintf(stderr, "Unsupported GT%u Coffeelake System\n", devinfo->gt);
 	    return false;
 	}
-    } else if (devinfo->is_cannonlake) {
-        SET_NAMES(gputop_devinfo, "cnl", "Cannonlake");
-	gen_metrics = gputop_oa_get_metrics_cnl(&gputop_devinfo);
     } else if (devinfo->is_elkhartlake) {
         SET_NAMES(gputop_devinfo, "EHL", "Elkhartlake");
 	gen_metrics = gputop_oa_get_metrics_lkf(&gputop_devinfo);
