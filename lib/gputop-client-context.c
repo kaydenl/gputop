@@ -465,7 +465,7 @@ add_tracepoint_stream_data(struct gputop_client_context *ctx,
     /* Reunify the per cpu data into one global stream of tracepoints sorted
      * by time. */
     struct gputop_perf_tracepoint_data *tp_end_data =
-        list_empty(&ctx->perf_tracepoints_data) ?
+        list_is_empty(&ctx->perf_tracepoints_data) ?
         NULL : list_last_entry(&ctx->perf_tracepoints_data,
                                struct gputop_perf_tracepoint_data, link);
     while (tp_end_data && tp_end_data->data.time > tp_data->data.time) {
@@ -476,7 +476,7 @@ add_tracepoint_stream_data(struct gputop_client_context *ctx,
 
     /* Also reunify the per cpu data into the stream of tracepoints sorted by
      * time. */
-    tp_end_data = list_empty(&tp->data) ?
+    tp_end_data = list_is_empty(&tp->data) ?
         NULL : list_last_entry(&tp->data, struct gputop_perf_tracepoint_data, tp_link);
     while (tp_end_data && tp_end_data->data.time > tp_data->data.time) {
         tp_end_data = (tp_end_data->tp_link.prev == &tp->data) ? NULL :
@@ -762,7 +762,7 @@ get_accumulated_sample(struct gputop_client_context *ctx,
 {
     struct gputop_accumulated_samples *samples;
 
-    if (list_empty(&ctx->free_samples)) {
+    if (list_is_empty(&ctx->free_samples)) {
         samples = (struct gputop_accumulated_samples *) calloc(1, sizeof(*samples));
     } else {
         samples = list_first_entry(&ctx->free_samples, struct gputop_accumulated_samples, link);
@@ -935,7 +935,7 @@ i915_perf_record_for_hw_id(struct gputop_client_context *ctx,
     uint64_t aggregation_period_ns = ctx->oa_visible_timeline_s * 1000000000UL;
     struct gputop_accumulated_samples *first_samples =
         list_first_entry(&ctx->timelines, struct gputop_accumulated_samples, link);
-    while (!list_empty(&ctx->timelines) &&
+    while (!list_is_empty(&ctx->timelines) &&
            (samples->timestamp_end - first_samples->timestamp_start) > aggregation_period_ns) {
         hw_context_add_time(first_samples->context, first_samples, false);
         put_accumulated_sample(ctx, first_samples);
@@ -1609,7 +1609,7 @@ i915_perf_empty_samples(struct gputop_client_context *ctx)
         put_accumulated_sample(ctx, ctx->current_graph_samples);
         ctx->current_graph_samples = NULL;
     }
-    assert(list_empty(&ctx->graphs));
+    assert(list_is_empty(&ctx->graphs));
     ctx->n_graphs = 0;
 
     if (ctx->last_chunk) {
@@ -1623,7 +1623,7 @@ i915_perf_empty_samples(struct gputop_client_context *ctx)
      */
     ctx->last_oa_timestamp = ctx->oa_visible_timeline_s * 1000000000ULL;
 
-    assert(list_empty(&ctx->i915_perf_chunks));
+    assert(list_is_empty(&ctx->i915_perf_chunks));
 }
 
 static void

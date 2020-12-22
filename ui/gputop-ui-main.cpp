@@ -433,7 +433,7 @@ display_live_i915_perf_counters_window(struct window *win)
         return;
 
     struct gputop_accumulated_samples *last_sample =
-        list_empty(&ctx->graphs) ? NULL :
+        list_is_empty(&ctx->graphs) ? NULL :
         list_last_entry(&ctx->graphs, struct gputop_accumulated_samples, link);
 
     ImGui::BeginChild("##counters");
@@ -1037,9 +1037,9 @@ static uint64_t
 get_end_timeline_ts(struct gputop_client_context *ctx,
                     bool for_i915_perf)
 {
-    struct gputop_accumulated_samples *oa_end = list_empty(&ctx->timelines) ?
+    struct gputop_accumulated_samples *oa_end = list_is_empty(&ctx->timelines) ?
         NULL : list_last_entry(&ctx->timelines, struct gputop_accumulated_samples, link);
-    struct gputop_perf_tracepoint_data *tp_end = list_empty(&ctx->perf_tracepoints_data) ?
+    struct gputop_perf_tracepoint_data *tp_end = list_is_empty(&ctx->perf_tracepoints_data) ?
         NULL : list_last_entry(&ctx->perf_tracepoints_data,
                                struct gputop_perf_tracepoint_data, link);
 
