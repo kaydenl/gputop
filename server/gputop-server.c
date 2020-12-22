@@ -1224,7 +1224,7 @@ handle_get_features(h2o_websocket_conn_t *conn,
     dbg("  Kernel Build = %s\n", pb_features.kernel_build);
     dbg("NOTICES:\n");
     for (int i = 0; i< pb_features.n_notices; i++) {
-        MAYBE_UNUSED const char *notice = pb_features.notices[i];
+        UNUSED const char *notice = pb_features.notices[i];
         dbg("  %s\n", notice);
     }
 
@@ -1361,8 +1361,8 @@ static void on_connect(uv_stream_t *server, int status)
     uv_timer_start(&timer, periodic_update_cb, 200, 200);
 }
 
-MAYBE_UNUSED static h2o_iovec_t cache_control;
-MAYBE_UNUSED static h2o_headers_command_t uncache_cmd[2];
+UNUSED static h2o_iovec_t cache_control;
+UNUSED static h2o_headers_command_t uncache_cmd[2];
 
 static void
 gputop_server_print_addresses(unsigned long port)
