@@ -3,6 +3,7 @@ mesa_src = [
   'src/util/bitscan.c',
   'src/util/hash_table.c',
   'src/util/ralloc.c',
+  'src/util/u_debug.c',
 ]
 mesa_inc = include_directories('include',
                                'include/drm-uapi',

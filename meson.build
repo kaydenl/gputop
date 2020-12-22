@@ -17,6 +17,17 @@ protobuf_c_dep = subproject('protobuf-c').get_variable('protobuf_c_dep')
 c = meson.get_compiler('c')
 cc = meson.get_compiler('cpp')
 
+pre_args = []
+foreach h : ['endian.h']
+  if cc.check_header(h)
+    pre_args += '-DHAVE_@0@'.format(h.to_upper().underscorify())
+  endif
+endforeach
+
+foreach a : pre_args
+  add_project_arguments(a, language : ['c', 'cpp'])
+endforeach
+
 prog_python2 = find_program('python2')
 
 build_native_ui = get_option('native_ui')
