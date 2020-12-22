@@ -1142,6 +1142,9 @@ init_dev_info(int fd, uint32_t devid, const struct gen_device_info *devinfo)
     } else if (devinfo->gen == 11) {
         SET_NAMES(gputop_devinfo, "icl", "Icelake");
 	gen_metrics = gputop_oa_get_metrics_icl(&gputop_devinfo);
+    } else if (devinfo->gen == 12) {
+        SET_NAMES(gputop_devinfo, "tgl", "Tigerlake");
+        gen_metrics = gputop_oa_get_metrics_tgl(&gputop_devinfo);
     } else {
 	fprintf(stderr, "Unknown System\n");
 	return false;
